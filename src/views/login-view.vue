@@ -4,17 +4,6 @@
       <!-- start: form -->
       <form @submit.prevent="onSubmit" class="flex flex-col space-y-6">
         <div class="row">
-          <label for="fullName" class="flex flex-col">
-            <span>Full name</span>
-            <input
-              id="fullName"
-              class="px-4 py-3 rounded-lg border"
-              type="text"
-              placeholder="Full name"
-            />
-          </label>
-        </div>
-        <div class="row">
           <label for="email" class="flex flex-col">
             <span>Email Address</span>
             <input
@@ -41,16 +30,18 @@
             type="submit"
             class="py-3 w-full text-center bg-primary text-white font-bold rounded-lg"
           >
-            Sign Up
+            Sign In
           </button>
         </div>
       </form>
 
       <!-- start: direction -->
       <div class="w-full text-center mt-6 font-semibold">
-        <span>I'm already a member.</span>
+        <span>I'm new user.</span>
         <span class="text-primary ml-1">
-          <router-link :to="{ name: 'Login', params: {} }">Sign In</router-link>
+          <router-link :to="{ name: 'Register', params: {} }"
+            >Sign Up</router-link
+          >
         </span>
       </div>
     </div>
