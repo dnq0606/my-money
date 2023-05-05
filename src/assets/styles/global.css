@@ -1,6 +1,7 @@
 body {
   font-family: 'Nunito', sans-serif;
   font-size: 16px;
+  @apply bg-dark-line;
 }
 
 @font-face {
