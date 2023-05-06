@@ -11,6 +11,7 @@
               class="px-4 py-3 rounded-lg border"
               type="email"
               placeholder="example@gmail.com"
+              v-model="email"
             />
           </label>
         </div>
@@ -22,10 +23,11 @@
               class="px-4 py-3 rounded-lg border"
               type="password"
               placeholder="Example123#"
+              v-model="password"
             />
           </label>
         </div>
-        <div class="row">
+        <div class="row" v-if="!isPending">
           <button
             type="submit"
             class="py-3 w-full text-center bg-primary text-white font-bold rounded-lg"
@@ -33,7 +35,21 @@
             Sign In
           </button>
         </div>
+        <div class="row" v-if="isPending">
+          <button
+            type="button"
+            disabled
+            class="py-3 w-full text-center bg-dark text-white font-bold rounded-lg cursor-not-allowed"
+          >
+            Loading...
+          </button>
+        </div>
       </form>
+
+      <!-- Start: error -->
+      <div class="text-center mt-4" :v-if="error">
+        <span class="text-rose-500">{{ error }}</span>
+      </div>
 
       <!-- start: direction -->
       <div class="w-full text-center mt-6 font-semibold">
@@ -48,6 +64,24 @@
   </div>
 </template>
 
-<script setup>
-function onSubmit() {}
+<script>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useSignIn } from "@/composables/useSignIn";
+export default {
+  setup() {
+    const { error, isPending, signin } = useSignIn();
+    const router = useRouter();
+
+    const email = ref("");
+    const password = ref("");
+
+    async function onSubmit() {
+      await signin(email.value, password.value);
+      if (!error.value) router.push({ name: "Profile", params: {} });
+    }
+
+    return { email, password, error, isPending, onSubmit };
+  },
+};
 </script>
