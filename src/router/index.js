@@ -29,12 +29,20 @@ const routes = [
   {
     path: "/",
     name: "Home",
+    meta: {
+      leading: true,
+      text: "Hi, Duy!",
+    },
     component: () =>
       import(/* webpackChunkName: "home" */ "../views/index-view.vue"),
   },
   {
     path: "/profile",
     name: "Profile",
+    meta: {
+      leading: false,
+      text: "Profile",
+    },
     component: () =>
       import(/* webpackChunkName: "profile" */ "../views/profile-view.vue"),
     beforeEnter: requireAuth,
@@ -44,6 +52,26 @@ const routes = [
     name: "Logout",
     component: () =>
       import(/* webpackChunkName: "logout" */ "../views/logout-view.vue"),
+  },
+  {
+    path: "/report",
+    name: "Report",
+    component: () =>
+      import(/* webpackChunkName: "report" */ "../views/report-view.vue"),
+  },
+  {
+    path: "/budget",
+    name: "Budget",
+    component: () =>
+      import(/* webpackChunkName: "budget" */ "../views/budget-view.vue"),
+  },
+  {
+    path: "/new-transaction",
+    name: "NewTransaction",
+    component: () =>
+      import(
+        /* webpackChunkName: "new-transaction" */ "../views/new-transaction-view.vue"
+      ),
   },
 ];
 

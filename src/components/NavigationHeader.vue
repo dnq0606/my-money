@@ -1,9 +1,12 @@
 <template>
   <header id="header" class="py-8">
-    <div class="container mx-auto h-full">
-      <div class="flex justify-between items-center mx-4">
+    <div class="container mx-auto h-full text-center px-8">
+      <div class="flex justify-between items-center">
         <div class="flex items-center">
-          <div class="w-10 h-10 rounded-full overflow-hidden mr-2">
+          <div
+            v-if="meta.leading"
+            class="w-10 h-10 rounded-full overflow-hidden mr-2"
+          >
             <img
               src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg"
               alt="User profile user"
@@ -11,7 +14,7 @@
               sizes="sm"
             />
           </div>
-          <h1 class="text-xl text-dark font-bold">Admin</h1>
+          <h1 class="text-xl text-dark font-bold">{{ meta.text }}</h1>
         </div>
         <div>
           <ul>
@@ -26,9 +29,15 @@
 </template>
 
 <script>
+import { useRoute } from "vue-router";
+import { computed } from "vue";
 export default {
   setup() {
-    return {};
+    const router = useRoute();
+    const meta = computed(() => router.meta);
+    return {
+      meta,
+    };
   },
 };
 </script>

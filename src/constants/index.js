@@ -41,3 +41,26 @@ export const PROFILE_OBTIONS = [
     },
   },
 ];
+
+export const NAVIGATIONS_FOOTER = [
+  {
+    icon: "t2ico-category",
+    name: "Home",
+    routerName: "Home",
+  },
+  {
+    icon: "t2ico-chart",
+    name: "Report",
+    routerName: "Report",
+  },
+  {
+    icon: "t2ico-presentation",
+    name: "Budget",
+    routerName: "Budget",
+  },
+  {
+    icon: "t2ico-profile",
+    name: "Profile",
+    routerName: "Profile",
+  },
+];
