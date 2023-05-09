@@ -45,7 +45,8 @@ export default {
 
 <style scoped>
 footer#footer > div[data-circle] {
-  @apply bg-dark-line;
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 250 251 / var(--tw-bg-opacity));
   width: 60px;
   height: 30px;
   border-bottom-left-radius: 60px;
