@@ -77,7 +77,6 @@
                   class="text-dark w-full outline-none"
                   type="date"
                   placeholder="Time"
-                  v-model="time"
                 />
               </div>
             </label>
@@ -129,6 +128,7 @@
                     class="text-dark w-full outline-none"
                     type="text"
                     placeholder="Select location"
+                    v-model="location"
                   />
                 </div>
               </label>
@@ -147,6 +147,7 @@
                     class="text-dark w-full outline-none"
                     type="text"
                     placeholder="With person"
+                    v-model="person"
                   />
                 </div>
               </label>
@@ -172,9 +173,13 @@
                     type="file"
                     id="file"
                     class="w-0 h-0 overflow-hidden absolute"
+                    @change="onchangeFile($event)"
                   />
                 </div>
               </label>
+            </div>
+            <div v-if="fileError">
+              <span class="text-red">{{ fileError }}</span>
             </div>
           </div>
         </div>
@@ -186,6 +191,7 @@
 
 <script>
 import { ref } from "vue";
+import useStorage from "@/composables/useStorage";
 import { useUser } from "@/composables/useUser";
 import useCollection from "@/composables/useCollection";
 
@@ -196,11 +202,19 @@ export default {
     const category = ref("");
     const note = ref("");
     const time = ref(new Date());
+    const fileUpload = ref(null);
+    const location = ref(null);
+    const person = ref("");
+    const fileError = ref(null);
 
+    const { url, uploadFile } = useStorage("transactions");
     const { getUser } = useUser();
     const { error, addRecord } = useCollection("transactions");
 
     async function onSubmit() {
+      if (fileUpload.value) await uploadFile(fileUpload.value);
+
+      console.log("thumbnail", url.value);
       const { user } = getUser();
       const transaction = {
         total: parseInt(total.value),
@@ -208,15 +222,43 @@ export default {
         note: note.value,
         time: time.value,
         userId: user.value.uid,
+        location: location.value,
+        person: person.value,
+        thumbnail: url.value,
       };
 
       await addRecord(transaction);
 
       console.log(error);
       console.log("create");
+      console.log("url", url);
     }
 
-    return { isMoreDetail, total, category, note, time, onSubmit };
+    function onchangeFile(event) {
+      const selected = event.target.files[0];
+      const typesFile = ["image/png", "image/jpg", "image/jpeg"];
+
+      if (selected && typesFile.includes(selected.type)) {
+        fileUpload.value = selected;
+        fileError.value = null;
+      } else {
+        fileUpload.value = null;
+        fileError.value = "Please select a file type pnd or jpg.";
+      }
+    }
+
+    return {
+      isMoreDetail,
+      total,
+      category,
+      note,
+      time,
+      location,
+      person,
+      fileError,
+      onSubmit,
+      onchangeFile,
+    };
   },
 };
 </script>
