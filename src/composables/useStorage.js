@@ -21,13 +21,8 @@ function useStorage(name) {
     const fileRef = firebaseRef(storage, filePath.value);
 
     try {
-      await uploadBytes(fileRef, file).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((downloadURL) => {
-          url.value = downloadURL;
-        });
-      });
-
-      return url.value;
+      const response = await uploadBytes(fileRef, file);
+      url.value = await getDownloadURL(response.ref);
     } catch (err) {
       error.value = err.message;
     }

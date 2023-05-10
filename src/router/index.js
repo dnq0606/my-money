@@ -83,7 +83,8 @@ const routes = [
     meta: {
       leading: false,
       text: "NewTransaction",
-      isShowFooter: false,
+      isShowFooter: true,
+      isShowButtonAdd: true,
     },
     component: () =>
       import(

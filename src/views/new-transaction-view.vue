@@ -212,9 +212,10 @@ export default {
     const { error, addRecord } = useCollection("transactions");
 
     async function onSubmit() {
-      if (fileUpload.value) await uploadFile(fileUpload.value);
+      if (fileUpload.value) {
+        await uploadFile(fileUpload.value);
+      }
 
-      console.log("thumbnail", url.value);
       const { user } = getUser();
       const transaction = {
         total: parseInt(total.value),
@@ -228,10 +229,7 @@ export default {
       };
 
       await addRecord(transaction);
-
-      console.log(error);
-      console.log("create");
-      console.log("url", url);
+      console.log("error addRecord", error.value);
     }
 
     function onchangeFile(event) {

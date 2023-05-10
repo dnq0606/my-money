@@ -18,8 +18,17 @@
         </div>
         <div>
           <ul>
-            <li>
+            <li v-if="!meta.isShowButtonAdd">
               <i class="t2ico t2ico-notification text-2xl"></i>
+            </li>
+            <li v-if="meta.isShowButtonAdd">
+              <button
+                type="button"
+                class="bg-primary text-white font-semibold px-4 py-1 rounded-md"
+                @click="$emit('add')"
+              >
+                Add
+              </button>
             </li>
           </ul>
         </div>
@@ -35,8 +44,12 @@ export default {
   setup() {
     const router = useRoute();
     const meta = computed(() => router.meta);
+
+    function onAddTransaction() {}
+
     return {
       meta,
+      onAddTransaction,
     };
   },
 };
